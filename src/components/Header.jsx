@@ -1,4 +1,4 @@
-import { UserButton, useUser } from "@clerk/clerk-react";
+import { UserButton, useUser, SignInButton, SignUpButton } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 function Header() {
@@ -29,7 +29,14 @@ function Header() {
           </Link>
         </div>
       ) : (
-        <Button>Submit Listing</Button>
+        <div className="flex items-center gap-3">
+          <SignInButton>
+            <Button variant="outline">Login</Button>
+          </SignInButton>
+          <SignUpButton>
+            <Button>Sign Up</Button>
+          </SignUpButton>
+        </div>
       )}
     </div>
   );

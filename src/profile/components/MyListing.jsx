@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { db } from "./../../../config";
 import { CarImages, CarListing } from "./../../../config/schema";
+import { FaTrashAlt } from "react-icons/fa";
+
 function MyListing() {
   const { user } = useUser();
   const [carList, setCarList] = useState([]);
@@ -26,6 +28,24 @@ function MyListing() {
     setCarList(resp);
     console.log("Added");
   };
+
+  const DeleteCarListing = async (id) => {
+    if (window.confirm("Are you sure you want to delete this listing?")) {
+      try {
+        // Delete car images first
+        await db.delete(CarImages).where(eq(CarImages.carListingId, id));
+
+        // Delete car listing
+        await db.delete(CarListing).where(eq(CarListing.id, id));
+
+        // Refresh the list
+        GetUserCarListing();
+      } catch (error) {
+        console.error("Error deleting listing:", error);
+      }
+    }
+  };
+
   return (
     <div className="mt-6">
       <div className="flex justify-between items-center">
@@ -37,23 +57,30 @@ function MyListing() {
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-7 gap-5">
         {carList?.length > 0
           ? carList.map((item, index) => (
-              <div key={index}>
-                <CarItem car={item} />
-                <div className="p-2 bg-gray-50 rounded-lg flex justify-between gap-3">
-                  <Link to={"/add-listing?mode=edit&id=" + item?.id}>
-                    <Button variant="outline" className="cursor-pointer">
-                      Edit
-                    </Button>
-                  </Link>
-                  {/* <Button variant="destructive" className="cursor-pointer">
-                <FaTrashAlt />
-              </Button> */}
-                </div>
+            <div key={index}>
+              <CarItem car={item} />
+              <div className="p-2 bg-gray-50 rounded-lg flex justify-between gap-3">
+                <Link to={"/add-listing?mode=edit&id=" + item?.id}>
+                  <Button variant="outline" className="cursor-pointer">
+                    Edit
+                  </Button>
+                </Link>
+                <Button
+                  variant="destructive"
+                  className="cursor-pointer"
+                  onClick={() => DeleteCarListing(item?.id)}
+                >
+                  <FaTrashAlt />
+                </Button>
               </div>
-            ))
+            </div>
+          ))
           : [1, 2, 3, 4, 5, 6].map((item, index) => (
-              <div className="h-[100px] rounded-xl bg-gray-600 animate-ping"></div>
-            ))}
+            <div
+              key={index}
+              className="h-[100px] rounded-xl bg-gray-600 animate-ping"
+            ></div>
+          ))}
       </div>
     </div>
   );
