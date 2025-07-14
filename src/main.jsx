@@ -5,13 +5,14 @@ import { ClerkProvider } from "@clerk/clerk-react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Toaster } from "sonner";
 import AddListing from "./add-listing/Index";
-import Contact from "./contact";
+import Contact from "./pages/Contact";
 import Home from "./Home";
 import "./index.css";
 import ListingDetail from "./listing-details/[id]";
 import Profile from "./profile/Index";
 import SearchByOptions from "./search";
 import SearchByCategory from "./search/[category]";
+import Shop from "./pages/Shop.jsx";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: "/listing-details/:id",
     element: <ListingDetail />,
+  },
+  {
+    path: "/shop",
+    element: <Shop />,
   },
 ]);
 

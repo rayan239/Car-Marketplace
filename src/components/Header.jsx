@@ -8,18 +8,21 @@ function Header() {
       <img src="/logo-2.svg" alt="car logo" width={150} height={150} />
 
       <ul className="hidden md:flex gap-16">
-        <li className="font-medium hover:scale-105 transition-all cursor-pointer hover:text-primary">
-          Home
-        </li>
-        <li className="font-medium hover:scale-105 transition-all cursor-pointer hover:text-primary">
-          Search
-        </li>
-        <li className="font-medium hover:scale-105 transition-all cursor-pointer hover:text-primary">
-          New
-        </li>
-        <li className="font-medium hover:scale-105 transition-all cursor-pointer hover:text-primary">
-          Pre-owned
-        </li>
+        <Link to="/">
+          <li className="font-medium hover:scale-105 transition-all cursor-pointer hover:text-primary">
+            Home
+          </li>
+        </Link>
+        <Link to="/shop">
+          <li className="font-medium hover:scale-105 transition-all cursor-pointer hover:text-primary">
+            Shop
+          </li>
+        </Link>
+        <Link to="/contact">
+          <li className="font-medium hover:scale-105 transition-all cursor-pointer hover:text-primary">
+            Contact
+          </li>
+        </Link>
       </ul>
       {isSignedIn ? (
         <div className="flex items-center gap-5">
