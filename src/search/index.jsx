@@ -15,31 +15,33 @@ function SearchByOptions() {
 
   useEffect(() => {
     GetCarList();
-  }, []);
+  }, [condition, make, price]);
   const GetCarList = async () => {
-    const result = await db
+    const conditions = [];
+    if (condition && condition !== "undefined") {
+      conditions.push(eq(CarListing.condition, condition));
+    }
+    if (make && make !== "undefined") {
+      conditions.push(eq(CarListing.make, make));
+    }
+    if (price && price !== "undefined") {
+      conditions.push(
+        sql`CAST(REPLACE(REPLACE(${
+          CarListing.sellingPrice
+        }, '$', ''), ',', '') AS INTEGER) <= ${Number(price)}`
+      );
+    }
+
+    let query = db
       .select()
       .from(CarListing)
-      .innerJoin(CarImages, eq(CarListing.id, CarImages.carListingId))
-      //   .where(condition != undefined && eq(CarListing.condition, condition))
-      //   .where(make != undefined && eq(CarListing.make, make))
+      .innerJoin(CarImages, eq(CarListing.id, CarImages.carListingId));
 
-      //   .where(
-      //     price != undefined &&
-      //       sql`CAST(REPLACE(REPLACE(${
-      //         CarListing.sellingPrice
-      //       }, '$', ''), ',', '') AS INTEGER) <= ${Number(price)}`
-      //   );
+    if (conditions.length > 0) {
+      query = query.where(and(...conditions));
+    }
 
-      .where(
-        and(
-          eq(CarListing.condition, condition),
-          eq(CarListing.make, make),
-          sql`CAST(REPLACE(REPLACE(${
-            CarListing.sellingPrice
-          }, '$', ''), ',', '') AS INTEGER) <= ${Number(price)}`
-        )
-      );
+    const result = await query;
     const resp = Service.FormatResult(result);
     console.log(resp);
     setCarList(resp);

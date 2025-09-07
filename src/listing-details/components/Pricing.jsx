@@ -1,53 +1,22 @@
 import { Button } from "@/components/ui/button";
-import { MdOutlineLocalOffer } from "react-icons/md";
 import { useUser } from "@clerk/clerk-react";
 import { useState } from "react";
+import { MdOutlineLocalOffer } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 function Pricing({ carDetail }) {
   const { user } = useUser();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handlePayment = async () => {
+  const handlePayment = () => {
     if (!user) {
       alert("Please sign in to make a purchase");
       return;
     }
 
-    setLoading(true);
-    try {
-      const response = await fetch('/api/create-payment-intent', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          amount: carDetail?.sellingPrice * 100, // Convert to cents
-          carId: carDetail?.id,
-          carTitle: carDetail?.listingTitle,
-          userEmail: user?.primaryEmailAddress?.emailAddress,
-          userName: user?.fullName,
-        }),
-      });
-
-      const { clientSecret, paymentIntentId } = await response.json();
-
-      // Redirect to Stripe Checkout or use Stripe Elements
-      const stripe = window.Stripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
-
-      const { error } = await stripe.redirectToCheckout({
-        sessionId: clientSecret,
-      });
-
-      if (error) {
-        console.error('Stripe error:', error);
-        window.location.href = `/payment-error?error=${encodeURIComponent(error.message)}`;
-      }
-    } catch (error) {
-      console.error('Payment error:', error);
-      window.location.href = `/payment-error?error=${encodeURIComponent('Payment failed')}`;
-    } finally {
-      setLoading(false);
-    }
+    // Navigate to payment gateway
+    navigate(`/payment-gateway?carId=${carDetail?.id}`);
   };
 
   return (
@@ -63,7 +32,9 @@ function Pricing({ carDetail }) {
       <div className="space-y-4 mb-6">
         <div className="flex justify-between items-center py-2 border-b border-gray-100">
           <span className="text-gray-600">Vehicle Price</span>
-          <span className="font-semibold">{carDetail?.sellingPrice?.toLocaleString()}</span>
+          <span className="font-semibold">
+            {carDetail?.sellingPrice?.toLocaleString()}
+          </span>
         </div>
         <div className="flex justify-between items-center py-2 border-b border-gray-100">
           <span className="text-gray-600">Processing Fee</span>
@@ -71,7 +42,9 @@ function Pricing({ carDetail }) {
         </div>
         <div className="flex justify-between items-center py-2 text-lg font-bold">
           <span>Total</span>
-          <span className="text-green-600">{carDetail?.sellingPrice?.toLocaleString()}</span>
+          <span className="text-green-600">
+            {carDetail?.sellingPrice?.toLocaleString()}
+          </span>
         </div>
       </div>
 
@@ -86,7 +59,9 @@ function Pricing({ carDetail }) {
       </Button>
 
       <div className="mt-4 text-center">
-        <p className="text-xs text-gray-500">Secure payment powered by Stripe</p>
+        <p className="text-xs text-gray-500">
+          Secure payment powered by Stripe
+        </p>
         <div className="flex justify-center items-center mt-2 space-x-2">
           <span className="text-xs text-gray-400">🔒 SSL Secured</span>
           <span className="text-xs text-gray-400">💳 All cards accepted</span>

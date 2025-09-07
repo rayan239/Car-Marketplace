@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import Service from "@/Shared/Service";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
@@ -54,10 +53,6 @@ function OwnersDetail({ carDetail }) {
       />
       <h2 className="mt-2 font-bold text-xl">{carDetail?.userName}</h2>
       <h2 className="mt-2 text-gray-500">{carDetail?.createdBy}</h2>
-
-      <Button className="w-full mt-6" onClick={OnMessageOwnerButtonClick}>
-        Message Owner
-      </Button>
     </div>
   );
 }

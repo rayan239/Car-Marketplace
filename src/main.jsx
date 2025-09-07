@@ -5,14 +5,17 @@ import { ClerkProvider } from "@clerk/clerk-react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Toaster } from "sonner";
 import AddListing from "./add-listing/Index";
-import Contact from "./pages/Contact";
 import Home from "./Home";
 import "./index.css";
 import ListingDetail from "./listing-details/[id]";
+import Contact from "./pages/Contact";
+import PaymentError from "./pages/PaymentError";
+import PaymentGateway from "./pages/PaymentGateway";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import Shop from "./pages/Shop.jsx";
 import Profile from "./profile/Index";
 import SearchByOptions from "./search";
 import SearchByCategory from "./search/[category]";
-import Shop from "./pages/Shop.jsx";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +49,18 @@ const router = createBrowserRouter([
   {
     path: "/shop",
     element: <Shop />,
+  },
+  {
+    path: "/payment-gateway",
+    element: <PaymentGateway />,
+  },
+  {
+    path: "/payment-success",
+    element: <PaymentSuccess />,
+  },
+  {
+    path: "/payment-error",
+    element: <PaymentError />,
   },
 ]);
 

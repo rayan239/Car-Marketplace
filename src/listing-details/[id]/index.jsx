@@ -2,9 +2,10 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import MostSearchedCar from "@/components/MostSearchedCar";
 import Service from "@/Shared/Service";
+import { useUser } from "@clerk/clerk-react";
 import { eq } from "drizzle-orm";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Description from "../components/Description";
 import DetailHeader from "../components/DetailHeader";
 import Features from "../components/Features";
@@ -18,7 +19,8 @@ import { CarImages, CarListing } from "./../../../config/schema";
 
 function ListingDetail() {
   const { id } = useParams();
-  console.log(id);
+  const { user } = useUser();
+  const navigate = useNavigate();
   const [carDetail, setCarDetail] = useState();
 
   useEffect(() => {
@@ -48,7 +50,6 @@ function ListingDetail() {
           {/* Left */}
           <div className="md:col-span-2 ">
             {/* Image Gallery */}
-
             <ImageGallery carDetail={carDetail} />
 
             {/* Description */}

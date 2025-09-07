@@ -79,10 +79,17 @@ function AddListing() {
   };
 
   const onSubmit = async (e) => {
-    setLoader(true);
     e.preventDefault();
-    console.log(formData);
 
+    const requiredFields = carDetails.carDetails.filter(item => item.required);
+    const missingFields = requiredFields.filter(item => !formData[item.name]);
+
+    if (missingFields.length > 0) {
+      toast.error(`Please fill out all required fields: ${missingFields.map(item => item.label).join(', ')}`);
+      return;
+    }
+
+    setLoader(true);
     toast("Please Wait...");
 
     if (mode == "edit") {

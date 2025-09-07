@@ -38,5 +38,19 @@ export const CarImages = pgTable("carImages", {
     .notNull()
     .references(() => CarListing.id),
 });
+
+export const Order = pgTable("order", {
+  id: serial("id").primaryKey(),
+  userId: varchar("userId").notNull(),
+  carListingId: integer("carListingId")
+    .notNull()
+    .references(() => CarListing.id),
+  phoneNumber: varchar("phoneNumber").notNull(),
+  pinCode: varchar("pinCode").notNull(),
+  paymentStatus: varchar("paymentStatus").notNull().default("success"),
+  paymentDate: varchar("paymentDate").notNull(),
+  amount: varchar("amount").notNull(),
+});
+
 //npm install drizzle-kit@latest
 // drizzle-kit push:mysql --config=drizzle.config.js
