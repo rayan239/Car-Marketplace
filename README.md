@@ -60,7 +60,6 @@ Inspired by platforms like **CarGurus, Cars.com, AutoTrader**:
 ## 🏆 Project Outcomes  
 - **Modern React-based Interface** – Responsive, aesthetic UI with Tailwind CSS  
 - **Advanced Search System** – Multi-criteria search & category filters  
-- **Real-time Messaging** – Chat via SendBird API  
 - **Financial Calculator** – Built-in loan calculator  
 - **Secure Authentication** – Clerk-based login/signup with social logins  
 - **Image Upload System** – Firebase-powered storage  
@@ -83,7 +82,7 @@ Inspired by platforms like **CarGurus, Cars.com, AutoTrader**:
 - **Clerk** (Authentication)  
 
 ### 📡 APIs & Services  
-- SendBird (Real-time messaging)  
+- Clerk for authentication
 - Firebase (Image storage)  
 
 ### 🔧 Development Tools  
@@ -118,8 +117,6 @@ Create a .env file in the project root:
 VITE_CLERK_PUBLISHABLE_KEY =pk_test_ZmlybS1ncm91cGVyLTQxLmNsZXJrLmFjY291bnRzLmRldiQ
 VITE_DRIZZLE_DATABASE_URL = postgresql://neondb_owner:npg_PD4t9XgwMRKF@ep-dry-rice-a5e6ww4m-pooler.us-east-2.aws.neon.tech/Car_MarketPlace?sslmode=require
 VITE_FIREBASE_API_KEY = AIzaSyA7U3XFCZxQ2Y_KiEqub_FqLfy8Hslomog
-VITE_SENBIRD_APP_ID = 44567632-F5B8-457F-841C-E4E5D027B9D7
-VITE_SENDBIRD_API_TOKEN = 348bd28f4f50e513e028f2f8bd5ef22716063b76
 ```
 ▶️ Run the App
 ```bash
