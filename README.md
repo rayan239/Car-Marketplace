@@ -101,7 +101,7 @@ Inspired by platforms like **CarGurus, Cars.com, AutoTrader**:
 - npm or yarn package manager  
 
 ### ⚡ Installation  
-```bash
+
 # Clone the repository
 git clone <repository-url>
 cd car-marketplace
